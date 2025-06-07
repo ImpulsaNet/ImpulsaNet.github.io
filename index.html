@@ -391,6 +391,60 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    const aiPrompt = document.getElementById('aiPrompt');
+    const generateIdeasBtn = document.getElementById('generateIdeasBtn');
+    const aiResults = document.getElementById('aiResults');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    generateIdeasBtn.addEventListener('click', async () => {
+        const prompt = aiPrompt.value.trim();
+        if (!prompt) {
+            aiResults.innerHTML = '<p class="text-red-500">Por favor, ingresa una descripción para generar ideas.</p>';
+            return;
+        }
+
+        aiResults.innerHTML = '';
+        loadingIndicator.classList.remove('hidden');
+        generateIdeasBtn.disabled = true;
+
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: `Genera 5 ideas de contenido para redes sociales (TikTok, Instagram, YouTube) sobre el tema: "${prompt}". Enfócate en atraer emprendedores que busquen autoempleo sin inversión inicial. Presenta las ideas como una lista numerada.` }] });
+        const payload = { contents: chatHistory };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                aiResults.innerHTML = `<pre class="whitespace-pre-wrap">${text}</pre>`;
+            } else {
+                aiResults.innerHTML = '<p class="text-red-500">No se pudieron generar ideas. Intenta de nuevo.</p>';
+            }
+        } catch (error) {
+            aiResults.innerHTML = `<p class="text-red-500">Error al conectar con la IA: ${error.message}. Por favor, inténtalo más tarde.</p>`;
+        } finally {
+            loadingIndicator.classList.add('hidden');
+            generateIdeasBtn.disabled = false;
+        }
+    });
 });
 </script>
 </body>

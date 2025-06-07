@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia de Marketing Digital para Afiliados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Entrepreneur -->
+    <!-- Application Structure Plan: La aplicación está diseñada siguiendo el embudo de marketing (Conciencia, Consideración, Conversión) para guiar al usuario a través de un viaje lógico. Inicia con una sección de "Oportunidad" para enganchar, seguida de una exploración interactiva de la "Estrategia por Plataforma" (TikTok, Instagram, YouTube). Luego, una "Galería de Contenido" filtrable permite al usuario visualizar ejemplos concretos. Finalmente, la sección de "Métricas y Medición" utiliza gráficos para demostrar cómo se medirá el éxito. Esta estructura fue elegida para transformar un plan estratégico en una herramienta de aprendizaje y exploración, en lugar de un simple documento, priorizando la usabilidad y la comprensión del modelo de negocio. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Pilar central, beneficios. -> Goal: Informar y enganchar. -> Viz/Method: Sección Hero con texto destacado. -> Interaction: Ninguna. -> Justification: Claridad y primer impacto. -> Library/Method: HTML/Tailwind.
+        - Report Info: Estrategia por plataforma (TikTok, Instagram, YouTube). -> Goal: Organizar y comparar. -> Viz/Method: Sistema de pestañas interactivas. -> Interaction: Clic en pestañas para cambiar contenido. -> Justification: Permite comparar estrategias sin sobrecargar la pantalla. -> Library/Method: Vanilla JS, HTML/Tailwind.
+        - Report Info: Contenido Sugerido. -> Goal: Organizar y explorar ejemplos. -> Viz/Method: Galería de tarjetas filtrable. -> Interaction: Botones para filtrar por plataforma. -> Justification: Interfaz dinámica y útil para encontrar ideas específicas. -> Library/Method: Vanilla JS, HTML/Tailwind.
+        - Report Info: Métricas de Rendimiento. -> Goal: Visualizar datos y KPIs. -> Viz/Method: Gráficos de barras y de líneas. -> Interaction: Tooltips al pasar el cursor. -> Justification: Los gráficos comunican datos complejos de forma rápida y efectiva. -> Library/Method: Chart.js.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .tab-active {
+            background-color: #A0522D;
+            color: #FFFFFF;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .tab-inactive {
+            background-color: #FFFFFF;
+            color: #A0522D;
+        }
+        .filter-btn-active {
+            background-color: #8B4513;
+            color: #FFFFFF;
+        }
+        .filter-btn-inactive {
+            background-color: #FFF8DC;
+            color: #8B4513;
+        }
+        .card-enter {
+            animation: card-enter 0.5s ease-out forwards;
+        }
+        @keyframes card-enter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-[#8B4513]">Impulso Mayorista</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#oportunidad" class="text-gray-600 hover:text-[#A0522D] transition duration-300">La Oportunidad</a>
+                <a href="#estrategia" class="text-gray-600 hover:text-[#A0522D] transition duration-300">Estrategia</a>
+                <a href="#contenido" class="text-gray-600 hover:text-[#A0522D] transition duration-300">Contenido</a>
+                <a href="#metricas" class="text-gray-600 hover:text-[#A0522D] transition duration-300">Métricas</a>
+            </div>
+            <a href="#" class="bg-[#A0522D] text-white px-6 py-2 rounded-full hover:bg-[#8B4513] transition duration-300 shadow-lg">¡Únete ahora!</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="oportunidad" class="py-20 bg-[#FFF8DC]">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-[#8B4513] mb-4">Emprendimiento Real y Accesible</h1>
+                <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">Nuestra misión es simple: darte todo lo que necesitas para que inicies tu propio negocio de distribución, sin la barrera de la inversión inicial en inventario y con una logística que trabaja para ti.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-4xl font-bold text-[#A0522D] mb-2">🚀</div>
+                        <h3 class="text-xl font-semibold mb-2">Sin Inversión Inicial</h3>
+                        <p class="text-gray-600">Empiezas a vender sin comprar inventario. Tu primera venta financia tu negocio.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-4xl font-bold text-[#A0522D] mb-2">🤝</div>
+                        <h3 class="text-xl font-semibold mb-2">Apoyo Constante</h3>
+                        <p class="text-gray-600">Te damos capacitación, herramientas y una comunidad para que nunca te sientas solo.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-4xl font-bold text-[#A0522D] mb-2">📦</div>
+                        <h3 class="text-xl font-semibold mb-2">Logística Sencilla</h3>
+                        <p class="text-gray-600">Nos encargamos de la parte compleja para que tú te enfoques en vender y crecer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="estrategia" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#8B4513]">Nuestra Estrategia Digital: Tu Embudo al Éxito</h2>
+                    <p class="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">Usamos cada plataforma con un propósito claro, guiando a prospectos como tú desde la curiosidad hasta la conversión, construyendo confianza en cada paso.</p>
+                </div>
+                
+                <div class="w-full max-w-4xl mx-auto">
+                    <div class="flex justify-center border-b-2 border-gray-200 mb-8">
+                        <button data-tab="tiktok" class="tab-button tab-active text-lg font-semibold py-4 px-8 flex-1 text-center transition duration-300">Conciencia (TikTok)</button>
+                        <button data-tab="instagram" class="tab-button tab-inactive text-lg font-semibold py-4 px-8 flex-1 text-center transition duration-300">Conexión (Instagram)</button>
+                        <button data-tab="youtube" class="tab-button tab-inactive text-lg font-semibold py-4 px-8 flex-1 text-center transition duration-300">Confianza (YouTube)</button>
+                    </div>
+
+                    <div id="tab-content" class="bg-white p-8 rounded-xl shadow-xl">
+                        <div id="tiktok-content" class="tab-pane">
+                            <h3 class="text-2xl font-bold text-[#A0522D] mb-4">TikTok: El Gancho Rápido y Viral</h3>
+                            <p class="text-gray-600 mb-6">Aquí despertamos la curiosidad. Con videos cortos y dinámicos, mostramos la oportunidad de una forma auténtica y entretenida, rompiendo mitos sobre el emprendimiento y generando interés masivo.</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Formato: Videos de 15-60 segundos, música en tendencia.</li>
+                                <li>Contenido: "Un día en mi vida", "Mitos vs. Realidad", Tips rápidos.</li>
+                                <li>Objetivo: Generar conciencia y dirigir tráfico al siguiente nivel del embudo.</li>
+                            </ul>
+                        </div>
+                        <div id="instagram-content" class="tab-pane hidden">
+                            <h3 class="text-2xl font-bold text-[#A0522D] mb-4">Instagram: La Vitrina de la Comunidad</h3>
+                            <p class="text-gray-600 mb-6">En Instagram construimos una comunidad. A través de contenido visualmente atractivo, Reels inspiradores e historias interactivas, conectamos con los prospectos, mostramos casos de éxito y fomentamos la interacción.</p>
+                             <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Formato: Reels, Carruseles educativos, Stories, IG Lives.</li>
+                                <li>Contenido: Historias de éxito, "Pregúntale a un afiliado", detrás de cámaras.</li>
+                                <li>Objetivo: Inspirar, generar conexión y nutrir la relación con los prospectos.</li>
+                            </ul>
+                        </div>
+                        <div id="youtube-content" class="tab-pane hidden">
+                             <h3 class="text-2xl font-bold text-[#A0522D] mb-4">YouTube: El Pilar de la Confianza</h3>
+                            <p class="text-gray-600 mb-6">YouTube es donde convertimos el interés en compromiso. Con videos más largos, explicamos a fondo el modelo de negocio, ofrecemos capacitación valiosa y testimonios detallados que construyen una confianza sólida.</p>
+                             <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Formato: Videos largos, webinars, tutoriales, Q&A en vivo.</li>
+                                <li>Contenido: Explicación del plan de compensación, tutoriales de la app, testimonios profundos.</li>
+                                <li>Objetivo: Educar a fondo, resolver todas las dudas y convertir a los prospectos en afiliados.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contenido" class="py-20 bg-[#FFF8DC]">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#8B4513]">Galería de Contenido Estratégico</h2>
+                    <p class="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">Explora las ideas de contenido que usaremos para atraer a los mejores emprendedores. Filtra por plataforma para ver la estrategia en acción.</p>
+                </div>
+
+                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                    <button class="filter-btn filter-btn-active px-4 py-2 rounded-full font-semibold transition" data-filter="all">Todos</button>
+                    <button class="filter-btn filter-btn-inactive px-4 py-2 rounded-full font-semibold transition" data-filter="tiktok">TikTok</button>
+                    <button class="filter-btn filter-btn-inactive px-4 py-2 rounded-full font-semibold transition" data-filter="instagram">Instagram</button>
+                    <button class="filter-btn filter-btn-inactive px-4 py-2 rounded-full font-semibold transition" data-filter="youtube">YouTube</button>
+                </div>
+
+                <div id="content-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+
+                <div class="mt-16 bg-white p-8 rounded-xl shadow-xl max-w-3xl mx-auto">
+                    <h3 class="text-2xl font-bold text-[#A0522D] mb-4 text-center">✨ Generador de Ideas de Contenido con IA ✨</h3>
+                    <p class="text-gray-600 mb-6 text-center">Describe brevemente sobre qué quieres ideas de contenido para redes sociales (ej. "tips para vender jabones" o "historia de éxito de un tendero").</p>
+                    <textarea id="aiPrompt" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A0522D] mb-4 h-24" placeholder="Ej. ideas para un Reel sobre la flexibilidad del autoempleo"></textarea>
+                    <button id="generateIdeasBtn" class="w-full bg-[#A0522D] text-white px-6 py-3 rounded-full hover:bg-[#8B4513] transition duration-300 shadow-lg font-semibold flex items-center justify-center">
+                        Generar Ideas con IA
+                        <span id="loadingIndicator" class="hidden ml-2 spinner"></span>
+                    </button>
+                    <div id="aiResults" class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 min-h-[100px] overflow-auto">
+                        <p class="text-gray-500">Aquí aparecerán tus ideas generadas por IA...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="metricas" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#8B4513]">Midiendo el Éxito: Nuestros Indicadores Clave</h2>
+                    <p class="text-lg text-gray-700 mt-4 max-w-2xl mx-auto">No solo actuamos, medimos. Estos son los KPIs que nos aseguran que la estrategia está funcionando y que estamos creciendo de manera sostenible y efectiva.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-center mb-4 text-[#A0522D]">Engagement y Alcance por Plataforma</h3>
+                        <div class="chart-container">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-center mb-4 text-[#A0522D]">Crecimiento de Afiliados</h3>
+                        <div class="chart-container">
+                             <canvas id="affiliateChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-white p-8 rounded-xl shadow-xl mt-16 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold text-center text-[#A0522D] mb-6">Métricas Fundamentales</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <p class="text-4xl font-bold text-[#8B4513]">📈</p>
+                            <p class="font-semibold mt-2">Tráfico al Sitio</p>
+                            <p class="text-sm text-gray-600">Clics desde cada plataforma hacia nuestra página de registro.</p>
+                        </div>
+                         <div>
+                            <p class="text-4xl font-bold text-[#8B4513]">🧑‍🤝‍🧑</p>
+                            <p class="font-semibold mt-2">Nuevos Registros</p>
+                            <p class="text-sm text-gray-600">Número de prospectos que completan el formulario de afiliación.</p>
+                        </div>
+                         <div>
+                            <p class="text-4xl font-bold text-[#8B4513]">✅</p>
+                            <p class="font-semibold mt-2">Tasa de Activación</p>
+                            <p class="text-sm text-gray-600">Porcentaje de registrados que se convierten en afiliados activos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-[#8B4513] text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Impulso Mayorista. Todos los derechos reservados.</p>
+            <p class="mt-2 text-sm text-gray-300">Construyendo el futuro del autoempleo en México.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const contentData = [
+        { platform: 'tiktok', title: '"Un Día en la Vida"', description: 'Muestra el contraste y la flexibilidad del autoempleo frente a un trabajo tradicional.' },
+        { platform: 'tiktok', title: '"Mitos vs. Realidad"', description: 'Desmonta ideas erróneas como la necesidad de una gran inversión inicial.' },
+        { platform: 'tiktok', title: 'Tips Rápidos de Venta', description: 'Micro-tutoriales de valor que demuestran el tipo de apoyo y capacitación que se ofrece.' },
+        { platform: 'instagram', title: 'Historias de Éxito', description: 'Carruseles visuales o Reels con citas y logros de afiliados reales para inspirar.' },
+        { platform: 'instagram', title: '"Pregúntale a un Afiliado"', description: 'Sesiones de Q&A en Stories o Lives para generar autenticidad y comunidad.' },
+        { platform: 'instagram', title: 'Detrás de Escena', description: 'Pequeños vistazos a la operación (almacén, equipo) para construir confianza en la marca.' },
+        { platform: 'youtube', title: 'Webinar Completo', description: 'Sesión grabada explicando a fondo el modelo de negocio, logística y comisiones.' },
+        { platform: 'youtube', title: 'Testimonios Extensos', description: 'Historias profundas de afiliados, mostrando su viaje y transformación.' },
+        { platform: 'youtube', title: 'Tutoriales de la App', description: 'Guías paso a paso para demostrar la facilidad de uso de la tecnología proporcionada.' },
+    ];
+
+    const contentGallery = document.getElementById('content-gallery');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    function renderGallery(filter) {
+        contentGallery.innerHTML = '';
+        const filteredData = filter === 'all' ? contentData : contentData.filter(item => item.platform === filter);
+        
+        filteredData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 card-enter';
+            
+            let platformIcon = '';
+            let platformColor = '';
+            switch(item.platform) {
+                case 'tiktok': platformIcon = '🎵'; platformColor = 'text-black'; break;
+                case 'instagram': platformIcon = '📸'; platformColor = 'text-pink-500'; break;
+                case 'youtube': platformIcon = '📺'; platformColor = 'text-red-600'; break;
+            }
+
+            card.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <span class="text-3xl mr-3">${platformIcon}</span>
+                    <span class="font-bold text-sm uppercase ${platformColor}">${item.platform}</span>
+                </div>
+                <h4 class="text-xl font-semibold text-[#8B4513] mb-2">${item.title}</h4>
+                <p class="text-gray-600">${item.description}</p>
+            `;
+            contentGallery.appendChild(card);
+        });
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('filter-btn-active');
+                btn.classList.add('filter-btn-inactive');
+            });
+            button.classList.add('filter-btn-active');
+            button.classList.remove('filter-btn-inactive');
+            renderGallery(button.dataset.filter);
+        });
+    });
+
+    renderGallery('all');
+
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.dataset.tab;
+            
+            tabButtons.forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            button.classList.add('tab-active');
+            button.classList.remove('tab-inactive');
+
+            tabPanes.forEach(pane => {
+                if (pane.id === `${tabId}-content`) {
+                    pane.classList.remove('hidden');
+                } else {
+                    pane.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+    const engagementChart = new Chart(engagementCtx, {
+        type: 'bar',
+        data: {
+            labels: ['TikTok', 'Instagram', 'YouTube'],
+            datasets: [{
+                label: 'Alcance Potencial (Miles)',
+                data: [150, 95, 60],
+                backgroundColor: 'rgba(160, 82, 45, 0.7)',
+                borderColor: 'rgba(139, 69, 19, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Interacción (%)',
+                data: [12, 18, 25],
+                 backgroundColor: 'rgba(255, 248, 220, 0.8)',
+                borderColor: 'rgba(160, 82, 45, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.dataset.label.includes('Miles') 
+                                    ? context.parsed.y + 'K'
+                                    : context.parsed.y + '%';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const affiliateCtx = document.getElementById('affiliateChart').getContext('2d');
+    const affiliateChart = new Chart(affiliateCtx, {
+        type: 'line',
+        data: {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+            datasets: [{
+                label: 'Nuevos Afiliados Registrados',
+                data: [15, 25, 40, 65, 90, 120],
+                fill: true,
+                backgroundColor: 'rgba(160, 82, 45, 0.2)',
+                borderColor: '#A0522D',
+                tension: 0.3
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    const aiPrompt = document.getElementById('aiPrompt');
+    const generateIdeasBtn = document.getElementById('generateIdeasBtn');
+    const aiResults = document.getElementById('aiResults');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    generateIdeasBtn.addEventListener('click', async () => {
+        const prompt = aiPrompt.value.trim();
+        if (!prompt) {
+            aiResults.innerHTML = '<p class="text-red-500">Por favor, ingresa una descripción para generar ideas.</p>';
+            return;
+        }
+
+        aiResults.innerHTML = '';
+        loadingIndicator.classList.remove('hidden');
+        generateIdeasBtn.disabled = true;
+
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: `Genera 5 ideas de contenido para redes sociales (TikTok, Instagram, YouTube) sobre el tema: "${prompt}". Enfócate en atraer emprendedores que busquen autoempleo sin inversión inicial. Presenta las ideas como una lista numerada.` }] });
+        const payload = { contents: chatHistory };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                aiResults.innerHTML = `<pre class="whitespace-pre-wrap">${text}</pre>`;
+            } else {
+                aiResults.innerHTML = '<p class="text-red-500">No se pudieron generar ideas. Intenta de nuevo.</p>';
+            }
+        } catch (error) {
+            aiResults.innerHTML = `<p class="text-red-500">Error al conectar con la IA: ${error.message}. Por favor, inténtalo más tarde.</p>`;
+        } finally {
+            loadingIndicator.classList.add('hidden');
+            generateIdeasBtn.disabled = false;
+        }
+    });
+});
+</script>
+</body>
+</html>
